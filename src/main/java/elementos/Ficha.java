@@ -1,23 +1,40 @@
 package elementos;
 
-/*
-*  Implementar CompareTo con la siguiente jerarquia:
-*   Blancas > Negras
-*   Rey > Reina > Alfil > Caballo > Torre > Peon
-*
-*   Métodos:
-*       - compareTo
-*       - (abstract) boolean validarMovimiento(filaOrigen, columnaOrigen, filaDestino, columnaDestino)
-*       - (abstract) String obtenerRepresentacion()
-*       - toString (devuelve el color y la representación)
-* */
-
 import elementos.interfaz.Color;
+import elementos.interfaz.TiposColor;
 
-public abstract class Ficha implements Comparable, Color {
+public abstract class Ficha implements Comparable<Ficha>, Color {
+
+    private TiposColor color;
+
+    public Ficha(TiposColor color) {
+        this.color = color;
+    }
+
+    public TiposColor getColor() {
+        return color;
+    }
+
+    public void setColor(TiposColor color) {
+        this.color = color;
+    }
 
     @Override
-    public int compareTo(Object o) {
-        return 0;
+    public int compareTo(Ficha otraFicha) {
+        if (this.color != otraFicha.color){
+            return this.color == TiposColor.BLANCO ? 1 : -1;
+        }
+        return Integer.compare(this.getRank(), otraFicha.getRank());
     }
+
+    protected abstract int getRank();
+
+    public abstract boolean validarMovimiento(int filaOrigen, int columnaOrigen, int filaDestino, int columnaDestino);
+    public abstract String obtenerRepresentacion();
+
+    @Override
+    public String toString() {
+        return this.color + " " + this.obtenerRepresentacion();
+    }
+
 }
