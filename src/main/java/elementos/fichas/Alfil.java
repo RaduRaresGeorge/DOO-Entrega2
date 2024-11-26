@@ -1,4 +1,10 @@
 package elementos.fichas;
 
-public class Alfil {
+import elementos.Ficha;
+
+public class Alfil extends Ficha {
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }

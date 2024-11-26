@@ -1,4 +1,10 @@
 package elementos.fichas;
 
-public class Rey {
+import elementos.Ficha;
+
+public class Rey extends Ficha {
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }
