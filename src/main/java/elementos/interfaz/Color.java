@@ -1,10 +1,8 @@
 package elementos.interfaz;
 
-/*
-*   Métodos:
-*      - setColor()
-*      - getColor()
-* */
-
 public interface Color {
+
+    void setColor(TiposColor color);
+    TiposColor getColor();
+
 }
