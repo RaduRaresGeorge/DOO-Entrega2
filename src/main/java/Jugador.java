@@ -2,31 +2,32 @@ import elementos.Ficha;
 import elementos.fichas.*;
 import elementos.interfaz.*;
 
+import java.util.List;
+
 public class Jugador implements Color {
 
-    private Ficha[] fichasEnPosesion;
-    private Ficha[] fichasComidas;
+    private ListaOrdenada<Ficha> fichasEnPosesion;
+    private ListaOrdenada<Ficha> fichasComidas;
     private TiposColor color;
 
     public Jugador(TiposColor color){
-        fichasEnPosesion = new Ficha[16];
-        fichasComidas = new Ficha[16];
+        fichasEnPosesion = new ListaOrdenada<>();
+        fichasComidas = new ListaOrdenada<>();
         this.color = color;
-        int i = 0;
         for (int j = 0; j < 8; j++) {
-            fichasEnPosesion[i++] = new Peon(this.color);
+            fichasEnPosesion.agregar(new Peon(this.color));
         }
         for (int j = 0; j < 2; j++) {
-            fichasEnPosesion[i++] = new Torre(this.color);
+            fichasEnPosesion.agregar(new Torre(this.color));
         }
         for (int j = 0; j < 2; j++) {
-            fichasEnPosesion[i++] = new Caballo(this.color);
+            fichasEnPosesion.agregar(new Caballo(this.color));
         }
         for (int j = 0; j < 2; j++) {
-            fichasEnPosesion[i++] = new Alfil(this.color);
+            fichasEnPosesion.agregar(new Alfil(this.color));
         }
-        fichasEnPosesion[i++] = new Reina(this.color);
-        fichasEnPosesion[i] = new Rey(this.color);
+        fichasEnPosesion.agregar(new Reina(this.color));
+        fichasEnPosesion.agregar(new Rey(this.color));
     }
 
     public TiposColor getColor(){
@@ -38,28 +39,16 @@ public class Jugador implements Color {
     }
 
     public void comerFicha(Ficha ficha){
-        for (int i = 0; i < fichasEnPosesion.length; i++) {
-            if (fichasEnPosesion[i] == ficha){
-                fichasEnPosesion[i] = null;
-                break;
-            }
-        }
-        for (int i = 0; i < fichasComidas.length; i++) {
-            if (fichasComidas[i] == null){
-                fichasComidas[i] = ficha;
-                break;
-            }
-        }
+        fichasEnPosesion.getElementos().remove(ficha);
+        fichasComidas.agregar(ficha);
     }
 
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Fichas comidas por el jugador ").append(this.color).append(": ");
-        for (Ficha ficha : fichasComidas) {
-            if (ficha != null){
-                sb.append(ficha).append(", ");
-            }
+        for (Ficha ficha : fichasComidas.getElementos()) {
+            sb.append(ficha).append(", ");
         }
         return sb.toString();
     }
