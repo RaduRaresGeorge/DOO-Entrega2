@@ -3,8 +3,13 @@ package elementos;
 import elementos.interfaz.Color;
 import elementos.interfaz.TiposColor;
 
-public abstract class Ficha implements Comparable<Ficha>, Color {
+import java.io.Serial;
+import java.io.Serializable;
 
+public abstract class Ficha implements Comparable<Ficha>, Color, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
     private TiposColor color;
 
     public Ficha(TiposColor color) {

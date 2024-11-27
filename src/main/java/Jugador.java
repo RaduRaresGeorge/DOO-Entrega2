@@ -2,7 +2,7 @@ import elementos.Ficha;
 import elementos.fichas.*;
 import elementos.interfaz.*;
 
-import java.util.List;
+import java.io.*;
 
 public class Jugador implements Color {
 
@@ -52,4 +52,17 @@ public class Jugador implements Color {
         }
         return sb.toString();
     }
+
+    public void guardarEstado(String archivo) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivo))) {
+            oos.writeObject(this);
+        }
+    }
+
+    public static Jugador cargarEstado(String archivo) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+            return (Jugador) ois.readObject();
+        }
+    }
+
 }
